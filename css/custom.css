@@ -1,5 +1,7 @@
 .circle
 {
+  position: absolute;
+  transform: translateX(112%);
   margin:0 auto;
   width:200px;
   height:200px;
@@ -13,8 +15,16 @@
 .circle:hover {
   background:#F7498F;
 }
+.visualisationArea {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  background-color: #D3D3D3;
+  border-radius:1%;
 
-
-#ex1Slider .slider-selection {
-	background: #BABABA;
+}
+@media screen and (max-width: 600px) {
+  .visualisationArea {
+    visibility: hidden;
+  }
 }

@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Web Voice Changer">
     <meta name="author" content="pboueke & mseefelder">
-    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
 
     <title>Web Voice Changer</title>
 
@@ -17,6 +16,14 @@
     <!-- custom -->
     <link href="css/custom.css" rel="stylesheet">
 
+
+    <script src="javascript/jquery.js"></script>
+    <script src="javascript/bootstrap-switch.min.js"></script>
+    <script src="javascript/bootstrap-slider.min.js"></script>
+
+    <script src="javascript/visualisation.js"></script>
+    <script src="javascript/buttons_handler.js"></script>
+
   </head>
 
   <body data-feedly-mini="yes">
@@ -25,8 +32,13 @@
       <div class="page-header">
         <h1>Web Voice Converter</h1>
       </div>    <br><br><br>
+      <div id="INvisualisation" class="visualisationArea" style="float: left;"></div>
+      <div class="circle" id="play_btn"><span id="play_icon" style="transform: translateY(45%) translateX(10%);" class="glyphicon glyphicon-play" aria-hidden="true" onclick="onPlay()"></span></div>
+      <div id="OUTvisualisation" class="visualisationArea" style="float: right;"></div>
 
-      <div class="circle"><span style="transform: translateY(45%) translateX(10%);" class="glyphicon glyphicon-play" aria-hidden="true"></span></div>
+      <br><br><br>
+      <br><br><br>
+      <br><br><br>
       <br><br><br>
 
       <div class="container">
@@ -67,10 +79,6 @@
         <p class="text-muted">Web Voice Converter &copy; 2016 pboueke & mseefelder.</p>
       </div>
     </footer>
-
-    <script src="javascript/jquery.js"></script>
-    <script src="javascript/bootstrap-switch.min.js"></script>
-    <script src="javascript/bootstrap-slider.min.js"></script>
 
     <script  type="text/javascript">
     //switches
