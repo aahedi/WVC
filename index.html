@@ -1,0 +1,100 @@
+<html lang="en" hola_ext_inject="disabled"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Web Voice Changer">
+    <meta name="author" content="pboueke & mseefelder">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>Web Voice Changer</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="css/sticky-footer.css" rel="stylesheet">
+
+    <!-- custom -->
+    <link href="css/custom.css" rel="stylesheet">
+
+  </head>
+
+  <body data-feedly-mini="yes">
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1>Web Voice Converter</h1>
+      </div>    <br><br><br>
+
+      <div class="circle"><span style="transform: translateY(45%) translateX(10%);" class="glyphicon glyphicon-play" aria-hidden="true"></span></div>
+      <br><br><br>
+
+      <div class="container">
+        <h2>Effects</h2>
+        <p>Select which effects you want to apply and how much of each should be applied.</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Effect</th>
+              <th>Enabled</th>
+              <th>Power</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Pitch </td>
+              <td><input id="pitch_enabled" type="checkbox" name="pitch_switch" ></td>
+              <td><input id="pitch_slider" data-slider-id='pitchSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></td>
+            </tr>
+            <tr>
+              <td>Delay</td>
+              <td><input id="delay_enabled" type="checkbox" name="delay_switch" ></td>
+              <td><input id="delay_slider" data-slider-id='delaySlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></td>
+            </tr>
+            <tr>
+              <td>Compression</td>
+              <td><input id="compression_enabled" type="checkbox" name="compression_switch" ></td>
+              <td><input id="compression_slider" data-slider-id='compressionSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+
+  </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Web Voice Converter &copy; 2016 pboueke & mseefelder.</p>
+      </div>
+    </footer>
+
+    <script src="javascript/jquery.js"></script>
+    <script src="javascript/bootstrap-switch.min.js"></script>
+    <script src="javascript/bootstrap-slider.min.js"></script>
+
+    <script  type="text/javascript">
+    //switches
+    $.fn.bootstrapSwitch.defaults.size = 'mini';
+    $("[name='pitch_switch']").bootstrapSwitch();
+    $("[name='delay_switch']").bootstrapSwitch();
+    $("[name='compression_switch']").bootstrapSwitch();
+    //sliders
+    $('#pitch_slider').slider({
+    	formatter: function(value) {
+    		return 'Current value: ' + value;
+    	}
+    });
+    $('#delay_slider').slider({
+      formatter: function(value) {
+        return 'Current value: ' + value;
+      }
+    });
+    $('#compression_slider').slider({
+      formatter: function(value) {
+        return 'Current value: ' + value;
+      }
+    });
+    </script>
+
+  </body>
+</html>
