@@ -21,10 +21,24 @@
   position: relative;
   background-color: #D3D3D3;
   border-radius:1%;
-
+  font-stretch: expanded;
 }
 @media screen and (max-width: 600px) {
   .visualisationArea {
     visibility: hidden;
   }
+}
+
+.labelIN {
+  position: absolute;
+  color: FFF;
+  font-size: 650%;
+  transform: translateY(30%) translateX(50%);
+  letter-spacing: 5px;
+}
+.labelOUT {
+  position: absolute;
+  color: FFF;
+  font-size: 650%;
+  transform: translateY(30%) translateX(1%);
 }
