@@ -11,6 +11,8 @@ var barSpacingPercent = null;
 var prebars = null;
 var postbars = null;
 
+var resampleAmount = 0.8;
+
 //experimental
 var preanalyser = null;
 var prefilter = null;
@@ -59,7 +61,7 @@ function onPlay() {
           var outputData = outputBuffer.getChannelData(channel);
 
           //resample data
-          var downData = resampleFloat(inputData, 0.8);
+          var downData = resampleFloat(inputData, resampleAmount);//has error, read declaration
           //place resampled data on output array
           for (var i = 0; i < outputData.length; i++) {
             var index = i%downData.length;
@@ -136,6 +138,16 @@ function onPlay() {
 
 function update() {
 
+    var tempPitch = $("#pitch_slider").val();
+    resampleAmount = (tempPitch < 50) ? 
+      tempPitch*0.02 :
+      1.0+((tempPitch-50)*0.0613);//tested value to avoid ratio bug
+
+    //more code to avoid ratio bug
+    if (Math.floor(resampleAmount)-resampleAmount == 0) {
+      resampleAmount += 0.01;
+    };
+
     if (playback_status === "on") {
 
       // Schedule the next update
@@ -158,6 +170,7 @@ function update() {
     }
 };
 
+//error when ratio has no fractional part
 function resampleFloat (input, ratio) {
   var bufSize = Math.floor(input.length/ratio);
   var data = 0;
