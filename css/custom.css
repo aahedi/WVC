@@ -35,13 +35,13 @@
 .labelIN {
   position: absolute;
   color: FFF;
-  font-size: 650%;
-  transform: translateY(30%) translateX(50%);
+  font-size: 950%;
+  transform: translateY(20%) translateX(50%);
   letter-spacing: 5px;
 }
 .labelOUT {
   position: absolute;
   color: FFF;
-  font-size: 650%;
-  transform: translateY(30%) translateX(1%);
+  font-size: 950%;
+  transform: translateY(20%) translateX(3%);
 }
