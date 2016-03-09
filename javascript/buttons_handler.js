@@ -120,8 +120,12 @@ function onPlay() {
       }
       postbars = $("#OUTvisualisation > div");
 
-      $("#play_icon").toggleClass("glyphicon glyphicon-play", false);
-      $("#play_icon").toggleClass("glyphicon glyphicon-pause", true);
+      $("#play_icon").fadeOut(200);
+      setTimeout(function () {
+        $("#play_icon").toggleClass("glyphicon glyphicon-play", false);
+        $("#play_icon").toggleClass("glyphicon glyphicon-pause", true);
+        $("#play_icon").fadeIn(200);
+      }, 500);
 
       $("#parameters").fadeOut();
       setTimeout(function () {$("#graphs").fadeIn();}, 500);
@@ -138,6 +142,13 @@ function onPlay() {
       */
       // but something is leaking
       //cheap solution:
+
+      $("#play_icon").fadeOut(200);
+      setTimeout(function () {
+        $("#play_icon").toggleClass("glyphicon glyphicon-pause", false);
+        $("#play_icon").toggleClass("glyphicon glyphicon-play", true);
+        $("#play_icon").fadeIn(200);
+      }, 500);
 
       $("#graphs").fadeOut();
       setTimeout(function () {

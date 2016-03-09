@@ -32,7 +32,7 @@
       <div class="page-header">
         <h1>Web Voice Converter</h1>
       </div>    <br><br><br>
-      <div class="circle" id="play_btn"><span id="play_icon" style="transform: translateY(45%) translateX(10%);" class="glyphicon glyphicon-play" aria-hidden="true" onclick="onPlay()"></span></div>
+      <div onclick="onPlay()" class="circle" id="play_btn"><span id="play_icon" style="transform: translateY(45%) translateX(10%);" class="glyphicon glyphicon-play" aria-hidden="true"></span></div>
 
       <br><br><br>
 
@@ -70,13 +70,13 @@
               <td>Compression</td>
               <td><input id="compression_enabled" type="checkbox" name="compression_switch" ></td>
               <td>Min frequency</td>
-              <td><input id="compression_min_slider" data-slider-id='compressionSlider' type="text" data-slider-min="200" data-slider-max="600" data-slider-step="1" data-slider-value="400"/></td>
+              <td><input id="compression_min_slider" data-slider-id='compressionSlider' type="text" data-slider-min="100" data-slider-max="600" data-slider-step="1" data-slider-value="200"/></td>
             </tr>
             <tr>
               <td></td>
               <td></td>
               <td>Max frequency</td>
-              <td><input id="compression_max_slider" data-slider-id='compressionSlider' type="text" data-slider-min="600" data-slider-max="2000" data-slider-step="1" data-slider-value="1000"/></td>
+              <td><input id="compression_max_slider" data-slider-id='compressionSlider' type="text" data-slider-min="600" data-slider-max="3000" data-slider-step="1" data-slider-value="2000"/></td>
             </tr>
           </tbody>
         </table>
