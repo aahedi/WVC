@@ -82,9 +82,13 @@ function onPlay() {
           preanalyser.connect(prefilter);
           //get rid of ambient noise
           prefilter.connect(postfilter);
-          postfilter.connect(effect);
-          //apply effect
-          effect.connect(lastfilter);
+          if ($("[name='pitch_switch']").bootstrapSwitch('state')) {
+            postfilter.connect(effect);
+            //apply effect
+            effect.connect(lastfilter);
+          } else {
+            postfilter.connect(lastfilter);
+          }
           //filter spectrum copies
           lastfilter.connect(analyser);
           //analyser to display output spectrum
