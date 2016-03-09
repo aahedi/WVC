@@ -29,20 +29,23 @@ function onPlay() {
       analyser = context.createAnalyser();
 
       //clearing noise: highshelf(f: 500, g: -50) - > lowshelf(f: 100, g: -50)
-      postfilter = context.createBiquadFilter();
-      postfilter.type = "lowshelf";
-      postfilter.frequency.value = 400;
-      postfilter.gain.value = -50;
 
-      prefilter = context.createBiquadFilter();
-      prefilter.type = "highshelf";
-      prefilter.frequency.value = 1000;
-      prefilter.gain.value = -50;
+        var compression_enabled = $("[name='compression_switch']").bootstrapSwitch('state');
 
-      lastfilter = context.createBiquadFilter();
-      lastfilter.type = "highshelf";
-      lastfilter.frequency.value = 4000;
-      lastfilter.gain.value = -50;
+        postfilter = context.createBiquadFilter();
+        postfilter.type = "lowshelf";
+        postfilter.frequency.value = (compression_enabled) ? Number($('#compression_min_slider').val()) : 200;
+        postfilter.gain.value = -50;
+
+        prefilter = context.createBiquadFilter();
+        prefilter.type = "highshelf";
+        prefilter.frequency.value = (compression_enabled) ? Number($('#compression_max_slider').val()) : 2000;
+        prefilter.gain.value = -50;
+
+        lastfilter = context.createBiquadFilter();
+        lastfilter.type = "highshelf";
+        lastfilter.frequency.value = 4000;
+        lastfilter.gain.value = -50;
 
       preanalyser = context.createAnalyser();
       effect = context.createScriptProcessor(1024, 1, 1);
@@ -73,7 +76,7 @@ function onPlay() {
       navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
         local_stream = stream;
           source = context.createMediaStreamSource(stream);
-          
+
           source.connect(preanalyser);
           //analyser to display intput spectrum
           preanalyser.connect(prefilter);
@@ -139,7 +142,7 @@ function onPlay() {
 function update() {
 
     var tempPitch = $("#pitch_slider").val();
-    resampleAmount = (tempPitch < 50) ? 
+    resampleAmount = (tempPitch < 50) ?
       tempPitch*0.02 :
       1.0+((tempPitch-50)*0.0613);//tested value to avoid ratio bug
 

@@ -49,24 +49,34 @@
             <tr>
               <th>Effect</th>
               <th>Enabled</th>
-              <th>Power</th>
+              <th>Parameter</th>
+              <th>Value</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Pitch </td>
               <td><input id="pitch_enabled" type="checkbox" name="pitch_switch" ></td>
+              <td>Pitch parameter</td>
               <td><input id="pitch_slider" data-slider-id='pitchSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="40"/></td>
             </tr>
             <tr>
               <td>Delay</td>
               <td><input id="delay_enabled" type="checkbox" name="delay_switch" ></td>
+              <td>Delay Parameter</td>
               <td><input id="delay_slider" data-slider-id='delaySlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></td>
             </tr>
             <tr>
               <td>Compression</td>
               <td><input id="compression_enabled" type="checkbox" name="compression_switch" ></td>
-              <td><input id="compression_slider" data-slider-id='compressionSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></td>
+              <td>Min frequency</td>
+              <td><input id="compression_min_slider" data-slider-id='compressionSlider' type="text" data-slider-min="200" data-slider-max="600" data-slider-step="1" data-slider-value="400"/></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Max frequency</td>
+              <td><input id="compression_max_slider" data-slider-id='compressionSlider' type="text" data-slider-min="600" data-slider-max="2000" data-slider-step="1" data-slider-value="1000"/></td>
             </tr>
           </tbody>
         </table>
@@ -97,7 +107,12 @@
         return 'Current value: ' + value;
       }
     });
-    $('#compression_slider').slider({
+    $('#compression_min_slider').slider({
+      formatter: function(value) {
+        return 'Current value: ' + value;
+      }
+    });
+    $('#compression_max_slider').slider({
       formatter: function(value) {
         return 'Current value: ' + value;
       }
