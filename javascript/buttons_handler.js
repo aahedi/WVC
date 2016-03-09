@@ -123,6 +123,9 @@ function onPlay() {
       $("#play_icon").toggleClass("glyphicon glyphicon-play", false);
       $("#play_icon").toggleClass("glyphicon glyphicon-pause", true);
 
+      $("#parameters").fadeOut();
+      setTimeout(function () {$("#graphs").fadeIn();}, 500);
+
       update();
     } else {
       //ideal action below
@@ -135,7 +138,14 @@ function onPlay() {
       */
       // but something is leaking
       //cheap solution:
-      location.reload();
+
+      $("#graphs").fadeOut();
+      setTimeout(function () {
+        $("#parameters").fadeIn();
+        setTimeout(function () {
+          location.reload();
+        }, 200);
+      }, 500);
     }
 }
 
