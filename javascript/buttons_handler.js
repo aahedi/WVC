@@ -12,13 +12,14 @@ var prebars = null;
 var postbars = null;
 
 var resampleAmount = 0.8;
+var gainAmount = 10;
 
-//experimental
 var preanalyser = null;
 var prefilter = null;
 var postfilter = null;
 var lastfilter = null;
 var effect = null;
+var gain = null;
 
 function onPlay() {
     if (playback_status === "off") {
@@ -30,22 +31,25 @@ function onPlay() {
 
       //clearing noise: highshelf(f: 500, g: -50) - > lowshelf(f: 100, g: -50)
 
-        var compression_enabled = $("[name='compression_switch']").bootstrapSwitch('state');
+      var compression_enabled = $("[name='compression_switch']").bootstrapSwitch('state');
 
-        postfilter = context.createBiquadFilter();
-        postfilter.type = "lowshelf";
-        postfilter.frequency.value = (compression_enabled) ? Number($('#compression_min_slider').val()) : 200;
-        postfilter.gain.value = -50;
+      gain = context.createGain();
+      gain.gain.value = 1;
 
-        prefilter = context.createBiquadFilter();
-        prefilter.type = "highshelf";
-        prefilter.frequency.value = (compression_enabled) ? Number($('#compression_max_slider').val()) : 2000;
-        prefilter.gain.value = -50;
+      postfilter = context.createBiquadFilter();
+      postfilter.type = "lowshelf";
+      postfilter.frequency.value = (compression_enabled) ? Number($('#compression_min_slider').val()) : 200;
+      postfilter.gain.value = -50;
 
-        lastfilter = context.createBiquadFilter();
-        lastfilter.type = "highshelf";
-        lastfilter.frequency.value = 4000;
-        lastfilter.gain.value = -50;
+      prefilter = context.createBiquadFilter();
+      prefilter.type = "highshelf";
+      prefilter.frequency.value = (compression_enabled) ? Number($('#compression_max_slider').val()) : 2000;
+      prefilter.gain.value = -50;
+
+      lastfilter = context.createBiquadFilter();
+      lastfilter.type = "highshelf";
+      lastfilter.frequency.value = 4000;
+      lastfilter.gain.value = -50;
 
       preanalyser = context.createAnalyser();
       effect = context.createScriptProcessor(1024, 1, 1);
@@ -90,7 +94,9 @@ function onPlay() {
             postfilter.connect(lastfilter);
           }
           //filter spectrum copies
-          lastfilter.connect(analyser);
+          lastfilter.connect(gain);
+          //control output gain
+          gain.connect(analyser);
           //analyser to display output spectrum
           analyser.connect(context.destination); //maybe not
       });
@@ -174,6 +180,10 @@ function update() {
     //more code to avoid ratio bug
     if (Math.floor(resampleAmount)-resampleAmount == 0) {
       resampleAmount += 0.01;
+    };
+
+    if (gain) {
+      gain.gain.value = $("#gain_slider").val();
     };
 
     if (playback_status === "on") {

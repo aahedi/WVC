@@ -55,6 +55,12 @@
           </thead>
           <tbody>
             <tr>
+              <td>Gain </td>
+              <td><input id="pitch_enabled" type="checkbox" name="pitch_switch" checked="true" enabled="false" readonly></td>
+              <td>Gain parameter</td>
+              <td><input id="gain_slider" data-slider-id='gainSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="1"/></td>
+            </tr>
+            <tr>
               <td>Pitch </td>
               <td><input id="pitch_enabled" type="checkbox" name="pitch_switch" ></td>
               <td>Pitch parameter</td>
@@ -98,6 +104,11 @@
     $("[name='delay_switch']").bootstrapSwitch();
     $("[name='compression_switch']").bootstrapSwitch();
     //sliders
+    $('#gain_slider').slider({
+      formatter: function(value) {
+        return 'Current value: ' + value;
+      }
+    });
     $('#pitch_slider').slider({
     	formatter: function(value) {
     		return 'Current value: ' + value;
