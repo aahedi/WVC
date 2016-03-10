@@ -22,9 +22,18 @@ var lastfilter = null;
 var effect = null;
 var gain = null;
 
+//recording
+var streamDest = null;
+var mediaRec = null;
+var chunks = [];
+var blob = null;
+
 function onPlay() {
     if (playback_status === "off") {
+
       playback_status = "on";
+
+      sessionStorage.removeItem('recordedAudio');
 
       AudioContext = window.AudioContext || window.webkitAudioContext;
       context = new AudioContext();
@@ -55,6 +64,23 @@ function onPlay() {
 
       preanalyser = context.createAnalyser();
       effect = context.createScriptProcessor(1024, 1, 1);
+
+      streamDest = context.createMediaStreamDestination();
+      mediaRec = new MediaRecorder(streamDest.stream);
+      chunks = [];
+
+      mediaRec.ondataavailable = function(evt) {
+        // push each chunk (blobs) in an array
+        chunks.push(evt.data);
+       };
+
+       mediaRec.onstop = function(evt) {
+        blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+        sessionStorage.setItem('recordedAudio', URL.createObjectURL(blob));
+        //window.location.href = URL.createObjectURL(blob);
+        //$('#replay_btn').attr("href", URL.createObjectURL(blob));
+        //window.open(URL.createObjectURL(blob), '_blank').focus();
+       };
 
       // Give the node a function to process audio events
       effect.onaudioprocess = function (audioProcessingEvent) {
@@ -162,6 +188,10 @@ function onPlay() {
 
           //analyser to display output spectrum
           analyser.connect(context.destination); //maybe not
+          analyser.connect(streamDest);
+
+          mediaRec.start();
+
       });
 
       analyser.fftSize = 512;
@@ -213,6 +243,7 @@ function onPlay() {
 
       update();
     } else {
+      mediaRec.stop();
 
       $("#play_icon").fadeOut(200);
       setTimeout(function () {
@@ -232,6 +263,8 @@ function onPlay() {
           location.reload();
         }, 200);
       }, 500);
+      
+      //mediaRec.requestData();
     }
 }
 
@@ -301,4 +334,16 @@ function resampleFloat (input, ratio) {
   };
 
   return out;
+}
+
+function rePlay() {
+  blob = sessionStorage.getItem('recordedAudio');
+  if (blob != null) {
+    try {    window.location.href = blob;
+    } catch (err) {
+      alert("Nothing recorded yet!");
+    };
+  } else {
+    alert("Nothing recorded yet!");
+  };
 }

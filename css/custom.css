@@ -2,8 +2,10 @@
 {
   position: relative;
   margin:0 auto;
-  width:200px;
-  height:200px;
+  /*width:200px;
+  height:200px;*/
+  width: 22vmin;
+  height: 22vmin;
   border-radius:50%;
   font-size:100px;
   color:#fff;
@@ -14,6 +16,25 @@
 .circle:hover {
   background:#F7498F;
 }
+
+.recircle
+{
+  position: relative;
+  margin:0 auto;
+  width:10vmin;
+  height:10vmin;
+  border-radius:50%;
+  font-size:100px;
+  color:#fff;
+  line-height:500px;
+  text-align:center;
+  background:#610DFA;
+}
+.recircle:hover {
+  background:#8F49F7;
+}
+
+
 .visualisationArea {
   width: 300px;
   height: 300px;
