@@ -16,10 +16,11 @@
     <!-- custom -->
     <link href="css/custom.css" rel="stylesheet">
 
-
     <script src="javascript/jquery.js"></script>
     <script src="javascript/bootstrap-switch.min.js"></script>
     <script src="javascript/bootstrap-slider.min.js"></script>
+
+    <script src="javascript/tuna.js"></script>
 
     <script src="javascript/visualisation.js"></script>
     <script src="javascript/buttons_handler.js"></script>
@@ -56,9 +57,9 @@
           <tbody>
             <tr>
               <td>Gain </td>
-              <td><input id="pitch_enabled" type="checkbox" name="pitch_switch" checked="true" enabled="false" readonly></td>
+              <td><input id="gain_enabled" type="checkbox" name="gain_switch" status="true" enabled="false" readonly></td>
               <td>Gain parameter</td>
-              <td><input id="gain_slider" data-slider-id='gainSlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="1"/></td>
+              <td><input id="gain_slider" data-slider-id='gainSlider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1"/></td>
             </tr>
             <tr>
               <td>Pitch </td>
@@ -70,7 +71,7 @@
               <td>Delay</td>
               <td><input id="delay_enabled" type="checkbox" name="delay_switch" ></td>
               <td>Delay Parameter</td>
-              <td><input id="delay_slider" data-slider-id='delaySlider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50"/></td>
+              <td><input id="delay_slider" data-slider-id='delaySlider' type="text" data-slider-min="1" data-slider-max="50" data-slider-step="1" data-slider-value="15"/></td>
             </tr>
             <tr>
               <td>Compression</td>
@@ -100,6 +101,7 @@
     <script  type="text/javascript">
     //switches
     $.fn.bootstrapSwitch.defaults.size = 'mini';
+    $("[name='gain_switch']").bootstrapSwitch();
     $("[name='pitch_switch']").bootstrapSwitch();
     $("[name='delay_switch']").bootstrapSwitch();
     $("[name='compression_switch']").bootstrapSwitch();

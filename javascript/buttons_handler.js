@@ -10,6 +10,7 @@ var visualisation = null;
 var barSpacingPercent = null;
 var prebars = null;
 var postbars = null;
+var tuna = null;
 
 var resampleAmount = 0.8;
 var gainAmount = 10;
@@ -32,6 +33,7 @@ function onPlay() {
       //clearing noise: highshelf(f: 500, g: -50) - > lowshelf(f: 100, g: -50)
 
       var compression_enabled = $("[name='compression_switch']").bootstrapSwitch('state');
+      var delay_enabled = $("[name='delay_switch']").bootstrapSwitch('state');
 
       gain = context.createGain();
       gain.gain.value = 1;
@@ -77,9 +79,57 @@ function onPlay() {
         }
       }
 
+      var SlapbackDelayNode = function(){
+          //create the nodes we’ll use
+          this.input = context.createGain();
+          var output = context.createGain(),
+              delay = context.createDelay(),
+              feedback = context.createGain(),
+              wetLevel = context.createGain();
+
+          //set some decent values
+          delay.delayTime.value = (delay_enabled) ? Number($('#delay_slider').val()) * 0.01 : 0.15;
+          feedback.gain.value = 0.25;
+          wetLevel.gain.value = 0.25;
+
+          //set up the routing
+          this.input.connect(delay);
+          this.input.connect(output);
+          delay.connect(feedback);
+          delay.connect(wetLevel);
+          feedback.connect(delay);
+          wetLevel.connect(output);
+
+          this.connect = function(target){
+             output.connect(target);
+          };
+      };
+
+      var AudioBus = function(){
+          this.input = context.createGain();
+          var output = context.createGain();
+
+          tuna = new Tuna(context);
+
+          //create effect nodes (Convolver and Equalizer are other custom effects from the library presented at the end of the article)
+          var delay = new SlapbackDelayNode(),
+              convolver = new tuna.Convolver({impulse: "impulses/impulse_rev.wav"});
+
+          this.input.connect(delay.input);
+          delay.connect(convolver);
+          convolver.connect(output);
+
+          this.input.connect(output);
+          this.connect = function(target){
+             output.connect(target);
+          };
+      };
+
       navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
         local_stream = stream;
           source = context.createMediaStreamSource(stream);
+
+          bus = new AudioBus();
 
           source.connect(preanalyser);
           //analyser to display intput spectrum
@@ -93,10 +143,23 @@ function onPlay() {
           } else {
             postfilter.connect(lastfilter);
           }
+          //postfilter.connect(bus.input);
+          //bus.connect(lastfilter);
+
+          //postfilter.connect(lastfilter);
+          if ($("[name='delay_switch']").bootstrapSwitch('state')) {
+            lastfilter.connect(bus.input);
+            //apply effect
+            bus.connect(gain);
+          } else {
+            lastfilter.connect(gain);
+          }
+
           //filter spectrum copies
-          lastfilter.connect(gain);
+          //lastfilter.connect(gain);
           //control output gain
           gain.connect(analyser);
+
           //analyser to display output spectrum
           analyser.connect(context.destination); //maybe not
       });
@@ -142,16 +205,6 @@ function onPlay() {
 
       update();
     } else {
-      //ideal action below
-      /*
-      playback_status = "off";
-      local_stream.stop();
-
-      $("#play_icon").toggleClass("glyphicon glyphicon-pause", false);
-      $("#play_icon").toggleClass("glyphicon glyphicon-play", true);
-      */
-      // but something is leaking
-      //cheap solution:
 
       $("#play_icon").fadeOut(200);
       setTimeout(function () {
