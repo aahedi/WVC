@@ -201,7 +201,15 @@ function onPlay() {
       }, 500);
 
       $("#parameters").fadeOut();
-      setTimeout(function () {$("#graphs").fadeIn();}, 500);
+      setTimeout(function () {
+        $("#graphs").fadeIn();
+        $("#gain_slider2_div").fadeIn();
+        if ($("[name='pitch_switch']").bootstrapSwitch('state')) {
+          $("#pitch_slider2_div").fadeIn();
+        }
+        $("#pitch_slider2").val($("#pitch_slider").val());
+        $("#pitch_gain2").val($("#gain_slider").val());
+      }, 500);
 
       update();
     } else {
@@ -214,6 +222,10 @@ function onPlay() {
       }, 500);
 
       $("#graphs").fadeOut();
+      $("#gain_slider2_div").fadeOut();
+      if ($("[name='pitch_switch']").bootstrapSwitch('state')) {
+        $("#pitch_slider2_div").fadeOut();
+      }
       setTimeout(function () {
         $("#parameters").fadeIn();
         setTimeout(function () {
@@ -225,7 +237,7 @@ function onPlay() {
 
 function update() {
 
-    var tempPitch = $("#pitch_slider").val();
+    var tempPitch = (playback_status === "off") ? $("#pitch_slider").val() : $("#pitch_slider2").val();
     resampleAmount = (tempPitch < 50) ?
       tempPitch*0.02 :
       1.0+((tempPitch-50)*0.0613);//tested value to avoid ratio bug
@@ -236,7 +248,7 @@ function update() {
     };
 
     if (gain) {
-      gain.gain.value = $("#gain_slider").val();
+      gain.gain.value = (playback_status === "off") ? $("#gain_slider").val() : $("#gain_slider2").val();
     };
 
     if (playback_status === "on") {

@@ -37,6 +37,18 @@
 
       <br><br><br>
 
+      <div class="row" style="transform: translateX(8%)">
+        <div class="col-sm-6" id="gain_slider2_div" style="display:none;">
+          <h4>Gain parameter</h4><input id="gain_slider2" data-slider-id='gainSlider2' type="text" data-slider-min="0" data-slider-max="50" data-slider-step="1" data-slider-value="1"/>
+        </div>
+        <div clas="col-sm-6" id="pitch_slider2_div" style="display:none;">
+          <h4>Pitch parameter</h4>
+          <input id="pitch_slider2" data-slider-id='pitchSlider2' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="40"/>
+        </div>
+    </div>
+
+    <br><br>
+
       <div class="container" id="graphs" style="display:none;">
         <div id="INvisualisation" class="visualisationArea" style="float: left;"><span class="labelIN">IN</span></div>
         <div id="OUTvisualisation" class="visualisationArea" style="float: right;"><span class="labelOUT">OUT</span></div>
@@ -57,9 +69,9 @@
           <tbody>
             <tr>
               <td>Gain </td>
-              <td><input id="gain_enabled" type="checkbox" name="gain_switch" status="true" enabled="false" readonly></td>
+              <td><div class="ondiv"><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ON</small></div></td>
               <td>Gain parameter</td>
-              <td><input id="gain_slider" data-slider-id='gainSlider' type="text" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1"/></td>
+              <td><input id="gain_slider" data-slider-id='gainSlider' type="text" data-slider-min="0" data-slider-max="50" data-slider-step="1" data-slider-value="1"/></td>
             </tr>
             <tr>
               <td>Pitch </td>
@@ -102,6 +114,7 @@
     //switches
     $.fn.bootstrapSwitch.defaults.size = 'mini';
     $("[name='gain_switch']").bootstrapSwitch();
+    $("[name='gain_switch']").bootstrapSwitch('state', true)
     $("[name='pitch_switch']").bootstrapSwitch();
     $("[name='delay_switch']").bootstrapSwitch();
     $("[name='compression_switch']").bootstrapSwitch();
@@ -115,6 +128,16 @@
     	formatter: function(value) {
     		return 'Current value: ' + value;
     	}
+    });
+    $('#gain_slider2').slider({
+      formatter: function(value) {
+        return 'Current value: ' + value;
+      }
+    });
+    $('#pitch_slider2').slider({
+      formatter: function(value) {
+        return 'Current value: ' + value;
+      }
     });
     $('#delay_slider').slider({
       formatter: function(value) {
@@ -130,6 +153,14 @@
       formatter: function(value) {
         return 'Current value: ' + value;
       }
+    });
+
+    $('#gain_slider').on("slide", function(slideEvt) {
+    	$('#gain_slider2').slider('setValue', slideEvt.value);
+    });
+
+    $('#pitch_slider').on("slide", function(slideEvt) {
+      $('#pitch_slider2').slider('setValue', slideEvt.value);
     });
     </script>
 

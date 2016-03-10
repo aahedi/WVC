@@ -45,3 +45,10 @@
   font-size: 950%;
   transform: translateY(20%) translateX(3%);
 }
+
+.ondiv {
+  background-color: #337ab7;
+  color: FFF;
+  border-radius: 3px;
+  width: 69px;
+}
